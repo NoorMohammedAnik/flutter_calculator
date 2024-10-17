@@ -8,61 +8,59 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String output = "0";
-  String _output = "0";
-  double num1 = 0.0;
-  double num2 = 0.0;
+
+  //initial values
+  String result = "0";
+  String value = "0";
+  double number1 = 0.0;
+  double number2 = 0.0;
   String operand = "";
 
   //function for calculation
-  buttonPressed(buttonText) {
+  buttonPressed(dynamic buttonText) {
+
+    //for Clear
     if (buttonText == "C") {
-      _output = "0";
-      num1 = 0.0;
-      num2 = 0.0;
+      value = "0";
+      number1 = 0.0;
+      number2 = 0.0;
       operand = "";
     } else if (buttonText == "+" ||
         buttonText == "-" ||
         buttonText == "/" ||
         buttonText == "X") {
-      num1 = double.parse(output);
+      number1 = double.parse(result);
       operand = buttonText;
-      _output = "0";
-    } else if (buttonText == ".") {
-      if (output.contains(".")) {
-        print("Already contains a decimal");
-      } else {
-        _output = _output + buttonText;
-      }
+      value = "0";
     } else if (buttonText == "=") {
-      num2 = double.parse(output);
+      number2 = double.parse(result);
       if (operand == "+") {
-        _output = (num1 + num2).toString();
+        value = (number1 + number2).toString();
       }
 
       if (operand == "-") {
-        _output = (num1 - num2).toString();
+        value = (number1 - number2).toString();
       }
 
       if (operand == "X") {
-        _output = (num1 * num2).toString();
+        value = (number1 * number2).toString();
       }
 
       if (operand == "/") {
-        _output = (num1 / num2).toString();
+        value = (number1 / number2).toString();
       }
 
-      num1 = 0.0;
-      num2 = 0.0;
+      number1 = 0.0;
+      number2 = 0.0;
       operand = "";
     } else {
-      _output = _output + buttonText;
+      value = value + buttonText;
     }
 
-    print(_output);
+    print(value);
 
     setState(() {
-      output = double.parse(_output).toStringAsFixed(2);
+      result = double.parse(value).toStringAsFixed(2);
     });
   }
 
@@ -71,65 +69,65 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue,
-          title: Text(
+          title: const Text(
             "Calculator",
             style: TextStyle(color: Colors.white),
           ),
         ),
-        body: Container(
-          child: Column(
-            children: <Widget>[
-              Container(
-                  //color: Colors.blueGrey,
-                  alignment: Alignment.centerRight,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 24.0, horizontal: 12.0),
-                    child: Text(
-                      output,
-                      style: TextStyle(
-                          fontSize: 48.0, fontWeight: FontWeight.bold),
-                    ),
-                  )),
-              Expanded(child: Divider()),
-              Column(
-                children: [
-                  Row(children: [
-                    buildButton("7"),
-                    buildButton("8"),
-                    buildButton("9"),
-                    buildButton("+"),
-                  ]),
-                  Row(children: [
-                    buildButton("4"),
-                    buildButton("5"),
-                    buildButton("6"),
-                    buildButton("-"),
-                  ]),
-                  Row(children: [
-                    buildButton("1"),
-                    buildButton("2"),
-                    buildButton("3"),
-                    buildButton("X"),
-                  ]),
-                  Row(children: [
-                    buildButton("0"),
-                    buildButton("C"),
-                    buildButton("="),
-                    buildButton("/"),
-                  ]),
-                ],
-              ),
-            ],
-          ),
+        body: Column(
+          children: <Widget>[
+            Container(
+                //color: Colors.blueGrey,
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    result,
+                    style: const TextStyle(
+                        fontSize: 48.0, fontWeight: FontWeight.bold),
+                  ),
+                )),
+            const Expanded(child: Divider()),
+            //expanded take available space if column vertical and if row horizontal spaces
+
+            //  Divider(),
+            Column(
+              children: [
+                Row(children: [
+                  buildButton("7"),
+                  buildButton("8"),
+                  buildButton("9"),
+                  buildButton("+"),
+                ]),
+                Row(children: [
+                  buildButton("4"),
+                  buildButton("5"),
+                  buildButton("6"),
+                  buildButton("-"),
+                ]),
+                Row(children: [
+                  buildButton("1"),
+                  buildButton("2"),
+                  buildButton("3"),
+                  buildButton("X"),
+                ]),
+                Row(children: [
+                  buildButton("0"),
+                  buildButton("C"),
+                  buildButton("="),
+                  buildButton("/"),
+                ]),
+              ],
+            ),
+          ],
         ));
   }
 
-//build button
+//build button- reusable widgets
   Widget buildButton(String buttonText) {
     return Expanded(
       child: Container(
-        margin: EdgeInsets.all(5),
+        margin: const EdgeInsets.all(5),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blue,
@@ -141,7 +139,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(20.0),
             child: Text(
               buttonText,
-              style: TextStyle(
+              style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                   fontSize: 20),
