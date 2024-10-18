@@ -53,15 +53,21 @@ class _HomePageState extends State<HomePage> {
       number1 = 0.0;
       number2 = 0.0;
       operand = "";
+
     } else {
       value = value + buttonText;
     }
 
-    print(value);
+
 
     setState(() {
       result = double.parse(value).toStringAsFixed(2);
+
     });
+
+
+
+
   }
 
   @override
